@@ -46,15 +46,15 @@ const  getAllCategories = async() => {
     drawCategories(categories)
 }
 
-const drawCategories=(categories)=> {
+const drawCategories = (categories) => {
     const template = document.getElementById('temp-category');
 
     categories.forEach(category => {
         const clone = document.importNode(template.content, true);
         const checkbox = clone.querySelector('.opt');
 
-        checkbox.id = category.id;
-        checkbox.value = category.id;
+        checkbox.id = category.categoryId;
+        checkbox.value = category.categoryId;
         clone.querySelector('label').htmlFor = category.id;
         clone.querySelector('.OptionName').textContent = category.categoryName;
         clone.querySelector('.Count').textContent = category.count;
@@ -63,6 +63,30 @@ const drawCategories=(categories)=> {
     });
 }
 
+const clear = () => {
+    const elementsToRemove = document.querySelectorAll('.card');
+    elementsToRemove.forEach(element => element.remove());
+}
+
+const  filterProducts =async () => {
+    let stringUrl = 'api/products?'
+    let min = document.getElementById('minPrice').value
+    let max = document.getElementById('maxPrice').value
+    let desc = document.getElementById('nameSearch').value
+    if (min) stringUrl += 'minPrice=' + min+"&"
+    if (max) stringUrl += 'maxPrice=' + max+"&"
+    if (desc) stringUrl += 'description=' + desc + "&"
+    let checks = document.getElementsByClassName('opt')
+    let arr = [...checks]
+    arr.forEach(c => {
+        if (c.checked)
+            stringUrl += 'category=' + c.id + "&"
+    })
+    const response = await fetch(stringUrl)
+    const products = await response.json();
+    clear()
+    drawProducts(products)
+}
 
 getAllProduct()
 getAllCategories()

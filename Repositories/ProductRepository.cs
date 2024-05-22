@@ -18,11 +18,22 @@ namespace Repositories
             _productsContext = productsContext;
             _logger = logger;
         }
-        public async Task<List<Product>> GetAllProducts(float? minPrice, float? maxPrice, List<Category> category, string? description)
+        
+        public async Task<List<Product>> GetAllProducts(float? minPrice, float? maxPrice, int[] category, string? description)
         {
-            List<Product> products = await _productsContext.Products.Include(p=>p.Category).ToListAsync();
+            var query = _productsContext.Products.Where(product =>
+                (description == null || (product.ProductName.Contains(description)))
+                && ((minPrice == null) || (product.Price >= minPrice))
+                && ((maxPrice == 0) || (product.Price <= maxPrice))
+                && ((category==null || category.Length == 0) || (category.Contains(product.CategoryId))))
+                .OrderBy(product => product.Price);
+            Console.WriteLine(query.ToQueryString());
+            List<Product> products = await query.ToListAsync();
             _logger.LogInformation($"GetAllProducts -> {minPrice} {maxPrice} {category} {description}\n products:{products}");
             return products;
         }
+
+
+
     }
 }

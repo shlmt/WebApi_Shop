@@ -21,7 +21,7 @@ namespace project.Controllers
         }
         // GET: api/<ProductController>
         [HttpGet]
-        public async Task<ActionResult<List<ProductDTO>>> Get([FromQuery]float minPrice, [FromQuery]float maxPrice, [FromQuery]List<Category> category, [FromQuery]string? description)
+        public async Task<ActionResult<List<ProductDTO>>> Get([FromQuery]float minPrice, [FromQuery]float maxPrice, [FromQuery]int[] category, [FromQuery]string? description)
         { 
             List<Product> products = await _productService.GetALlProducts(minPrice, maxPrice, category, description);
             List<ProductDTO> productsDTO = _mapper.Map<List<Product>, List<ProductDTO>>(products);

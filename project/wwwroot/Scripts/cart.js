@@ -35,6 +35,7 @@ function createProductRows(products) {
         const clone = document.importNode(template.content, true);
         const product = JSON.parse(p)
         clone.querySelector('.imageColumn a').href = 'Images/' +product.imageUrl;
+        clone.querySelector('.imageColumn img').src = 'Images/' +product.imageUrl;
         clone.querySelector('.itemName').textContent = product.productName;
         clone.querySelector('.price').textContent = product.price*productCounts[p]+'$';
         clone.querySelector('.quantity').textContent = productCounts[p];

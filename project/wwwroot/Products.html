@@ -68,10 +68,8 @@
         <div class="ResultCount" style="position: absolute; top: 0px;">
             <button class="Clear" onclick="removeAllCart()">ריקון הסל עובד לי</button>
             <div><span id="counter">  </span> מוצרים</div>
-
             <div>
                 <span id="counter">
-
                 </span>
             </div>
         </div>
@@ -80,25 +78,19 @@
         </div>
 
         <div id="nameFilter" class="nameFilter filterBreak">
-
             <input type="text" id="nameSearch" class="floatRight" placeholder="חיפוש לפי שם מוצר">
-
-            <button class="floatRight" tabindex="0" onclick="filterProducts()">
-                <span class="header42"><img src="Images/searchIcon.svg" alt="סמל חיפוש"></span>
-            </button>
         </div>
         <div id="priceRangeFilter" class="filterBreak">
             <div><span id="counter">  </span> מחיר:</div>
-
             <input type="text" maxlength="9" id="minPrice" class="priceInputText">
             <span class="priceCurrency">₪</span>
-
+            <br/>
             <input type="text" maxlength="9" id="maxPrice" class="priceInputText">
             <span class="priceCurrency">₪</span>
-            <button onclick="filterProducts()">
-                <span><img src="Images/searchIcon.svg" alt="סמל חיפוש"></span>
-            </button>
         </div>
+        <button onclick="filterProducts()">
+            <span><img src="Images/searchIcon.svg" alt="סמל חיפוש"></span>
+        </button>
     </div>
 
     <div id="PoductList">
