@@ -11,8 +11,10 @@ namespace Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly ILogger<ProductRepository> _logger;
+        private  ILogger<ProductRepository> _logger;
+
         private WebApiProjectContext _productsContext;
+
         public ProductRepository(WebApiProjectContext productsContext, ILogger<ProductRepository> logger)
         {
             _productsContext = productsContext;

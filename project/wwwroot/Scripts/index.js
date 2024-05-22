@@ -39,6 +39,9 @@ const register = async () => {
         sessionStorage.setItem("user", JSON.stringify(dataPost));
         window.location.href = 'update.html'
     }
+    else {
+        alert("error")
+    }
 }
 
 const update = async () => {

@@ -11,7 +11,7 @@ namespace Repositories
     public class UsersRepository : IUsersRepository
     {        
         private WebApiProjectContext _webApiProjectContext;
-        private readonly ILogger<UsersRepository> _logger;
+        private ILogger<UsersRepository> _logger;
 
         public UsersRepository(WebApiProjectContext webApiProjectContext, ILogger<UsersRepository> logger)
         {

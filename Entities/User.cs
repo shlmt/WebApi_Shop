@@ -16,6 +16,6 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    [JsonIgnore]
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+/*    [JsonIgnore]
+*/    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

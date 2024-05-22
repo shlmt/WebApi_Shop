@@ -1,4 +1,6 @@
-﻿using Entities;
+﻿using AutoMapper;
+using DTOs;
+using Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -12,10 +14,12 @@ namespace project.Controllers
     public class UsersController : ControllerBase
     {
         private IUsersService _usersService;
+        private IMapper _mapper;
 
-        public UsersController(IUsersService usersService)
+        public UsersController(IUsersService usersService, IMapper mapper)
         {
-            this._usersService = usersService;
+            _usersService = usersService;
+            _mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -41,10 +45,13 @@ namespace project.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<ActionResult> Register([FromBody] User user)
+        public async Task<ActionResult> Register([FromBody] UserDTO user)
         {
-            User u = await _usersService.createUser(user);
-            return CreatedAtAction(nameof(u),new {id = user.Id}, user);
+            User user2 = _mapper.Map<UserDTO, User>(user);
+            User u = await _usersService.createUser(user2);
+            if (u == null)
+                return BadRequest();
+            return Ok(CreatedAtAction(nameof(u),new {id = user2.Id}, user));
         }
 
         [HttpPost]
@@ -56,11 +63,10 @@ namespace project.Controllers
 
         [HttpPut]
         [Route("update/{id}")]
-        public async Task<ActionResult<User>> Update(int id,[FromBody] User newUser)
+        public async Task<ActionResult<User>> Update(int id,[FromBody] UserDTO newUser)
         {
-            Console.WriteLine(newUser.ToString());
-            Console.WriteLine(newUser.ToString());
-            User u =await _usersService.updateUser(id,newUser);
+            User user = _mapper.Map<UserDTO, User>(newUser);
+            User u =await _usersService.updateUser(id,user);
             return Ok(u);
         }
 
