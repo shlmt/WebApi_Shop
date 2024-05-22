@@ -33,6 +33,12 @@ namespace Repositories
             return products;
         }
 
+        public async Task<int> GetPrice(int id)
+        {
+            var o = await _productsContext.Products.FindAsync(id);
+            return o.Price;
+        }
+
 
 
     }

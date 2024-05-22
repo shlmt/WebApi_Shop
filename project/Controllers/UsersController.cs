@@ -33,9 +33,7 @@ namespace project.Controllers
         [Route("login")]
         public async Task<ActionResult> Login([FromBody] LoginUser loginUser)
         {
-            Console.WriteLine(loginUser.ToString());
             User user = await _usersService.checkLogin(loginUser);
-            Console.WriteLine(user.ToString());
             if (user == null)
                 return Unauthorized();
             return Ok(user);

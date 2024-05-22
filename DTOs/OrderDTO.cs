@@ -7,11 +7,11 @@ namespace DTOs;
 public partial class OrderDTO
 {
 
-    public DateOnly OrderDate { get; set; }
+    public DateTime OrderDate { get; set; }
 
     public int OrderSum { get; set; }
+    public int UserId { get; set; }
 
-    [JsonIgnore]
     public virtual ICollection<OrderItemDTO> OrderItems { get; set; } = new List<OrderItemDTO>();
 
 }

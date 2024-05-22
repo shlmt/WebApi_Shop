@@ -45,5 +45,58 @@ function createProductRows(products) {
     });
 }
 
+const clear = () => {
+    const elementsToRemove = document.querySelectorAll('.item-row');
+    elementsToRemove.forEach(element => element.remove());
+    sessionStorage.removeItem("cart")
+}
+
+const placeOrder = async () => {
+    const user = sessionStorage.getItem("user")
+    if(!user){
+        alert("you need to sign in")
+            return
+    }
+    const uniqueProducts = [];
+    const productCounts = {};
+
+    prodCart.forEach(product => {
+        
+        if (!uniqueProducts.includes(product.productId)) {
+            uniqueProducts.push(product.productId);
+            productCounts[product.productId] = 1;
+        } else {
+            productCounts[product.productId]++;
+            return;
+        }
+    });
+    let orderItems = []
+    let sum = 0;
+    uniqueProducts.forEach(up => {
+        orderItems.push({ productId: up, quantity: productCounts[up] })
+    })
+    const currentDate = new Date();
+
+    const order = {
+        orderDate: currentDate,
+        orderSum: 0,
+        orderItems,
+        userId: JSON.parse(user).id
+    }
+    debugger
+    const res = await fetch("api/orders", {
+        method: "POST",
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(order)
+    });
+    if (res.ok) {
+        alert('created successfully!')
+        clear()
+    }
+    else alert('error')
+}
+
 const prodCart = sessionStorage.getItem('cart') ? JSON.parse(sessionStorage.getItem("cart")) : [];
 createProductRows(prodCart)

@@ -10,10 +10,11 @@
         },
         body: JSON.stringify(obj)
     });
+    debugger
     const dataPost = await res.json();
-    if (dataPost) {
+    if (res.ok) {
         sessionStorage.setItem("user", JSON.stringify(dataPost));
-        window.location.href = 'update.html'
+        window.location.href = 'products.html'
     }
     else alert('not authorized')
 }
@@ -32,8 +33,8 @@ const register = async () => {
         },
         body: JSON.stringify(user)
     })
-    const dataPost = await res.json();/*?!פה יש בעיה קטנה ולא נחמדה סטטוס 500?לא באשמתנו!? מבטיחות*/
-    if (dataPost) {
+    const dataPost = await res.json();
+    if (res.ok) {
         alert('created!')
         sessionStorage.setItem("user", JSON.stringify(dataPost));
         window.location.href = 'update.html'
