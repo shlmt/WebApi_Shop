@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
+using project;
 using Repositories;
 using Services;
-using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +20,7 @@ builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 
-builder.Services.AddDbContext<WebApiProjectContext>(options => options.UseSqlServer("Data Source=srv2\\PUPILS;Initial Catalog=webApiProject;Trusted_Connection=True;TrustServerCertificate=True"));
+builder.Services.AddDbContext<WebApiProjectContext>(options => options.UseSqlServer(_configuration.GetConnectionString("webApiProject")));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -46,5 +46,7 @@ app.UseStaticFiles();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseErrorHandlingMiddleware();
 
 app.Run();
