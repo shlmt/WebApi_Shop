@@ -37,7 +37,7 @@ namespace project.Controllers
         [Route("login")]
         public async Task<ActionResult> Login([FromBody] LoginUser loginUser)
         {
-            User user = await _usersService.checkLogin(loginUser);
+            User user = await _usersService.checkLogin(loginUser.Email,loginUser.Password);
             if (user == null)
                 return Unauthorized();
             return Ok(user);
@@ -56,9 +56,9 @@ namespace project.Controllers
 
         [HttpPost]
         [Route("passStrength")]
-        public int checkPassStrength([FromBody]Password pass)
+        public int checkPassStrength([FromBody]LoginUser pass)
         {
-            return _usersService.CheckPasswordStregth(pass.Pass);
+            return _usersService.CheckPasswordStregth(pass.Password);
         }
 
         [HttpPut]

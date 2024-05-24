@@ -18,9 +18,9 @@ namespace Services
             return await _usersRepository.getUserById(id);
         }
 
-        public async Task<User> checkLogin(LoginUser loginUser)
+        public async Task<User> checkLogin(string email, string password)
         {
-            return await _usersRepository.isAuth(loginUser);
+            return await _usersRepository.isAuth(email,password);
         }
         public async Task<User> createUser(User user)
         {

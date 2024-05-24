@@ -24,7 +24,9 @@ namespace project
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.ToString()+" "+httpContext.User+" "+httpContext.Session);
+                _logger.LogError($"Logged From My Middleware {ex.Message}  {ex.StackTrace}");
+                httpContext.Response.StatusCode = 500;
+                await httpContext.Response.WriteAsync("Internal Error In Server");
             }
         }
     }

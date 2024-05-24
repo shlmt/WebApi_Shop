@@ -11,12 +11,10 @@ namespace Repositories
     public class UsersRepository : IUsersRepository
     {        
         private WebApiProjectContext _webApiProjectContext;
-        private ILogger<UsersRepository> _logger;
 
-        public UsersRepository(WebApiProjectContext webApiProjectContext, ILogger<UsersRepository> logger)
+        public UsersRepository(WebApiProjectContext webApiProjectContext)
         {
             this._webApiProjectContext = webApiProjectContext;
-            _logger = logger;
         }
 
         public async Task<User> getUserById(int id)
@@ -24,10 +22,9 @@ namespace Repositories
             return await _webApiProjectContext.Users.FindAsync(id);
         }
 
-        public async Task<User> isAuth(LoginUser loginUser)
+        public async Task<User> isAuth(string email,string password)
         {
-            _logger.LogInformation("login");
-            return await _webApiProjectContext.Users.Where(u => u.Email == loginUser.Email && u.Password == loginUser.Password).FirstOrDefaultAsync();
+            return await _webApiProjectContext.Users.Where(u => u.Email == email && u.Password == password).FirstOrDefaultAsync();
         }
 
         public async Task<User> addUser(User user)
