@@ -19,8 +19,10 @@ builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddTransient<IRatingRepository, RatingRepository>();
+builder.Services.AddTransient<IRatingService, RatingService>();
 
-builder.Services.AddDbContext<WebApiProjectContext>(options => options.UseSqlServer(_configuration.GetConnectionString("webApiProject")));
+builder.Services.AddDbContext<WebApiProjectContext>(options => options.UseSqlServer(builder.Configuration["ConnectionString"]));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

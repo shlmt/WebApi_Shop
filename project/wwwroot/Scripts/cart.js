@@ -1,4 +1,9 @@
-function deleteRow(product) {
+const getSumPrice = () => {
+    let sum = 0
+    prodCart.forEach(p => sum += p.price)
+    return sum
+}
+const deleteRow=(product)=> {
     const rows = document.querySelectorAll('.item-row');
     rows.forEach(row => {
         if (row.querySelector('.itemName').textContent === product.productName) {
@@ -6,7 +11,10 @@ function deleteRow(product) {
             return;
         }
     });
+    document.getElementById('totalAmount').innerHTML = getSumPrice();
+    document.getElementById('itemCount').innerHTML = prodCart.length;
 }
+
 
 const removeProduct = (product) => {
     let cart = sessionStorage.getItem('cart') ? JSON.parse(sessionStorage.getItem("cart")) : [];
@@ -14,7 +22,11 @@ const removeProduct = (product) => {
     sessionStorage.setItem("cart", JSON.stringify(newCart));
     deleteRow(product)
 }
-function createProductRows(products) {
+
+const createProductRows = (products) => {
+    document.getElementById('totalAmount').innerHTML = getSumPrice();
+    document.getElementById('itemCount').innerHTML = prodCart.length;
+
     const template = document.getElementById('temp-row');
 
     const uniqueProducts = [];
@@ -49,6 +61,8 @@ const clear = () => {
     const elementsToRemove = document.querySelectorAll('.item-row');
     elementsToRemove.forEach(element => element.remove());
     sessionStorage.removeItem("cart")
+    document.getElementById('totalAmount').innerHTML = 0;
+    document.getElementById('itemCount').innerHTML = 0;
 }
 
 const placeOrder = async () => {
@@ -59,9 +73,8 @@ const placeOrder = async () => {
     }
     const uniqueProducts = [];
     const productCounts = {};
-
+    let sum = getSumPrice();
     prodCart.forEach(product => {
-        
         if (!uniqueProducts.includes(product.productId)) {
             uniqueProducts.push(product.productId);
             productCounts[product.productId] = 1;
@@ -71,7 +84,7 @@ const placeOrder = async () => {
         }
     });
     let orderItems = []
-    let sum = 0;
+
     uniqueProducts.forEach(up => {
         orderItems.push({ productId: up, quantity: productCounts[up] })
     })
@@ -79,11 +92,11 @@ const placeOrder = async () => {
 
     const order = {
         orderDate: currentDate,
-        orderSum: 0,
+        orderSum: sum,
         orderItems,
         userId: JSON.parse(user).id
     }
-    debugger
+
     const res = await fetch("api/orders", {
         method: "POST",
         headers: {

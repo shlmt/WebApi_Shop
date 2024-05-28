@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,14 @@ namespace Services
 {
     public class RatingService : IRatingService
     {
-        private IRatingService _ratingService;
-        public RatingService(IRatingService ratingService)
+        private IRatingRepository _ratingRepository;
+        public RatingService(IRatingRepository ratingRepository)
         {
-            _ratingService = ratingService;
+            _ratingRepository = ratingRepository;
         }
         public Task insertRating(Rating rating)
         {
-            return _ratingService.insertRating(rating);
+            return _ratingRepository.insertRating(rating);
         }
     }
 }

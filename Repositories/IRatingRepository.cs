@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    internal interface IRatingRepository
+    public interface IRatingRepository
     {
-        public Task insertRating(Rating rating);
+        public Task<int> insertRating(Rating rating);
 
     }
 }

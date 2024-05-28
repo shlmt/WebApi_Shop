@@ -12,14 +12,5 @@ namespace Entities
         public string Referer { get; set; }
         public string UserAgent { get; set; }
         public DateTime? RecordDate { get; set; }
-        public Rating(string host,string method, string path, string referer, string userAgent, DateTime recordDate)
-        {
-            Host = host;
-            Method = method;
-            Path = path;
-            Referer = referer;
-            UserAgent = userAgent;
-            RecordDate = recordDate;
-        }
     }
 }

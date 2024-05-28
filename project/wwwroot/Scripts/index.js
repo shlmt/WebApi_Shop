@@ -10,7 +10,6 @@
         },
         body: JSON.stringify(obj)
     });
-    debugger
     const dataPost = await res.json();
     if (res.ok) {
         sessionStorage.setItem("user", JSON.stringify(dataPost));

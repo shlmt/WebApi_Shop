@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using Services;
 using Entities;
+using Microsoft.AspNetCore.Components.RenderTree;
+using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace project
 {
@@ -18,7 +21,15 @@ namespace project
 
         public async Task Invoke(HttpContext httpContext, IRatingService ratingService)
         {
-            Rating rating = new Rating(httpContext.Request.Host.Host, httpContext.Request.Method, httpContext.Request.Path, httpContext.Request.Headers.Referer, httpContext.Request.Headers.UserAgent, new DateTime());
+            Rating rating = new Rating()
+            {
+                Host = httpContext.Request.Host.Host,
+                Method = httpContext.Request.Method,
+                Path = httpContext.Request.Path,
+                Referer = httpContext.Request.Headers.Referer,
+                UserAgent = httpContext.Request.Headers.UserAgent,
+                RecordDate = new DateTime()
+            };
             ratingService.insertRating(rating);
             await _next(httpContext);
         }
