@@ -10,7 +10,7 @@ using TestProject;
 
 namespace Test
 {
-    /*public class UserRepositoryIntegrationTesting : IClassFixture<DatabaseFixture>
+    public class UserRepositoryIntegrationTesting : IClassFixture<DatabaseFixture>
     {
         private readonly WebApiProjectContext _dbContext;
         private readonly UsersRepository _usersRepository;
@@ -38,7 +38,7 @@ namespace Test
             Assert.NotNull(result);
         }
 
-    }*/
+    }
     
 
 }

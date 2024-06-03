@@ -9,7 +9,6 @@ using System.IO;
 
 namespace project
 {
-    // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
     public class RatingMiddleware
     {
         private readonly RequestDelegate _next;

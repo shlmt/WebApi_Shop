@@ -19,60 +19,27 @@ namespace Repositories
             _configuration = configuration;
         }
 
-        /* public Task insertRating(Rating rating)
-         {
-             string query = "INSERT INTO Rating(host, method, path, referer, user_agent, record_date)" + "VALUES(@host, @method, @path, @referer, @user_agent, @record_date)";
-
-             using (SqlConnection conn = new SqlConnection(_configuration.GetConnectionString("webApiProject")))
-             using (SqlCommand cmd = new SqlCommand(query, conn))
-             {
-                 cmd.Parameters.Add("@host", SqlDbType.NVarChar, 50).Value = rating.Host;
-                 cmd.Parameters.Add("@method", SqlDbType.NChar, 10).Value = rating.Method;
-                 cmd.Parameters.Add("@path", SqlDbType.NVarChar, 50).Value = rating.Path;
-                 cmd.Parameters.Add("@referer", SqlDbType.NVarChar, 100).Value = rating.Referer;
-                 cmd.Parameters.Add("@user_agent", SqlDbType.NVarChar, 1000).Value = rating.UserAgent;
-                 cmd.Parameters.Add("@record_date", SqlDbType.DateTime).Value = rating.RecordDate;
-
-                 conn.Open();
-                 int rowsAffwcted = cmd.ExecuteNonQuery();
-                 conn.Close();
-
-                 
-             }
-         }*/
         public async Task<int> insertRating(Rating rating)
         {
-            string query = "INSERT INTO Rating(host, method, path, referer, user_agent, record_date) " +
-                           "VALUES(@host, @method, @path, @referer, @user_agent, @record_date)";
 
-            using (SqlConnection conn = new SqlConnection(_configuration["ConnectionString"]))
-            using (SqlCommand cmd = new SqlCommand(query, conn))
+            string query = "INSERT INTO RATING(HOST,METHOD,PATH,REFERER,USER_AGENT,Record_Date)" + "VALUES(@host,@method,@path,@referer,@user_agent,@record_date)";
+            using (SqlConnection cn = new SqlConnection(_configuration["ConnectionString"]))
+            using (SqlCommand cmd = new SqlCommand(query, cn))
             {
-                /*cmd.Parameters.Add("@host", SqlDbType.NVarChar, 50).Value = rating.Host;
-                cmd.Parameters.Add("@method", SqlDbType.NChar, 10).Value = rating.Method;
-                cmd.Parameters.Add("@path", SqlDbType.NVarChar, 50).Value = rating.Path;
-                cmd.Parameters.Add("@referer", SqlDbType.NVarChar, 100).Value = rating.Referer;
-                cmd.Parameters.Add("@user_agent", SqlDbType.NVarChar, 1000).Value = rating.UserAgent;
-                cmd.Parameters.Add("@record_date", SqlDbType.DateTime).Value = rating.RecordDate;
+                cmd.Parameters.AddWithValue("@HOST", rating.Host);
+                cmd.Parameters.AddWithValue("@METHOD", rating.Method);
+                cmd.Parameters.AddWithValue("@PATH", rating.Path);
+                cmd.Parameters.AddWithValue("@REFERER", rating.Referer);
+                cmd.Parameters.AddWithValue("@USER_AGENT", rating.UserAgent);
+                cmd.Parameters.AddWithValue("@Record_Date", DateTime.Now);
 
-                await conn.OpenAsync();
+                cn.Open();
                 int rowsAffected = await cmd.ExecuteNonQueryAsync();
-                await conn.CloseAsync();
-
-                return rowsAffected;*/
-                cmd.Parameters.AddWithValue("@host", rating.Host);
-                cmd.Parameters.AddWithValue("@method", rating.Method);
-                cmd.Parameters.AddWithValue("@path", rating.Path);
-                cmd.Parameters.AddWithValue("@referer", rating.Referer);
-                cmd.Parameters.AddWithValue("@user_agent", rating.UserAgent);
-                cmd.Parameters.AddWithValue("@record_date", rating.RecordDate);
-
-                await conn.OpenAsync();
-                int rowsAffected = await cmd.ExecuteNonQueryAsync();
-                await conn.CloseAsync();
+                cn.Close();
 
                 return rowsAffected;
             }
+
         }
     }
 }
