@@ -66,7 +66,7 @@ namespace project.Controllers
         public async Task<ActionResult<User>> Update(int id,[FromBody] UserDTO newUser)
         {
             User user = _mapper.Map<UserDTO, User>(newUser);
-            User u =await _usersService.updateUser(id,user);
+            User u = await _usersService.updateUser(id,user);
             return Ok(u);
         }
 

@@ -11,14 +11,12 @@ namespace Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private  ILogger<ProductRepository> _logger;
 
         private WebApiProjectContext _productsContext;
 
-        public ProductRepository(WebApiProjectContext productsContext, ILogger<ProductRepository> logger)
+        public ProductRepository(WebApiProjectContext productsContext)
         {
             _productsContext = productsContext;
-            _logger = logger;
         }
         
         public async Task<List<Product>> GetAllProducts(float? minPrice, float? maxPrice, int[] category, string? description)
@@ -31,7 +29,6 @@ namespace Repositories
                 .OrderBy(product => product.Price);
             Console.WriteLine(query.ToQueryString());
             List<Product> products = await query.ToListAsync();
-            _logger.LogInformation($"GetAllProducts -> {minPrice} {maxPrice} {category} {description}\n products:{products}");
             return products;
         }
 

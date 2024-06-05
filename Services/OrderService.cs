@@ -22,19 +22,23 @@ namespace Services
         }
         public async Task<Order> CreateOrder(Order order)
         {
-            Order o = order;
+            int sum = await calcSum(order);
+            if (order.OrderSum != sum)
+                _logger.LogError("mismatch between true sum " + sum + "to the recived sum " + order.OrderSum);
+            
+            order.OrderSum = sum;
+            return await _orderRepository.CreateOrder(order);
+        }
+
+        private async Task<int> calcSum(Order order)
+        {
             int sum = 0;
             foreach (var item in order.OrderItems)
             {
                 int price = await _productRepository.GetPrice(item.ProductId);
                 sum += item.Quantity * price;
             }
-            if (order.OrderSum != sum)
-            {
-                _logger.LogError("mismatch between true sum " + sum + "to the recived sum " + order.OrderSum);
-            }
-            o.OrderSum = sum;
-            return await _orderRepository.CreateOrder(o);
+            return sum;
         }
     }
 }

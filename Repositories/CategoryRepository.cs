@@ -43,6 +43,5 @@ namespace Repositories
         {
             return await _webApiProjectContext.Categories.ToListAsync();
         }
-
-}
+    }
 }
