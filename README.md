@@ -1,1 +1,2 @@
-# project
+בס"ד
+.NET Core Project
