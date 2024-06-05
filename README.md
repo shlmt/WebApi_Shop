@@ -68,7 +68,7 @@ Errors are caught by the error handling middleware and handled properly. This in
 
 ### Monitoring
 
-Traffic is monitored and logged in a dedicated table for analytical purposes.
+Traffic is monitored and logged in a dedicated table for analytical purposes within the middleware.
 
 ### Security
 
@@ -80,3 +80,7 @@ Traffic is monitored and logged in a dedicated table for analytical purposes.
 
 * We performed integration tests in the repository layer against a temporary database created specifically for testing and deleted at the end of the test.
 * We performed unit tests in the service layer using a mocking framework like Moq to isolate and test functions with complex logic.
+
+### Example Client
+
+We developed a small client using HTML and JavaScript to demonstrate an online store that uses this API.
