@@ -36,7 +36,7 @@ DI is used extensively throughout the project, providing several benefits:
 
 ### Database
 
-The project uses Entity Framework with the Database First approach. To run the project, you can use commands like `add-migration` and other EF Core CLI commands.
+The project uses Entity Framework with the Database First approach. To run the project, you can use commands like `add-migration update database` and other EF Core CLI commands.
 
 ### Scalability
 
@@ -44,7 +44,7 @@ To ensure scalability, all functions are implemented using asynchronous programm
 
 ### Data Input
 
-Data input is handled in a separate project. You can find more details and access it here: [Link to ADO project on GitHub] (replace with the actual link)
+Data input is handled in a separate project. You can find more details and access it here: [Link to ADO project on GitHub] 
 
 ### Documentation
 
