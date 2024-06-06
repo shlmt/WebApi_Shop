@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DTOs;
 using Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -8,6 +9,7 @@ using Services;
 
 namespace project.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[Controller]")]
     public class OrdersController : ControllerBase
@@ -19,7 +21,7 @@ namespace project.Controllers
             _orderService = orderService;
             _mapper = mapper;
         }
-        // POST api/<OrderController>
+
         [HttpPost]
         public async Task<ActionResult<OrderDTO>> Post([FromBody] OrderDTO order)
         {

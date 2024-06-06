@@ -42,9 +42,15 @@ namespace Repositories
             {
                 return null;
             }
-            _webApiProjectContext.Entry(user).CurrentValues.SetValues(updatedUserDetails);
+            // Update properties other than the ID
+            user.FirstName = updatedUserDetails.FirstName;
+            user.LastName = updatedUserDetails.LastName;
+            user.Email = updatedUserDetails.Email;
+            user.Password = updatedUserDetails.Password;
+            // Add more properties as needed
+
             await _webApiProjectContext.SaveChangesAsync();
-            return updatedUserDetails;
+            return user;
         }
     }
 }

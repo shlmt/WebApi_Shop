@@ -1,8 +1,12 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using project;
 using Repositories;
 using Services;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +27,42 @@ builder.Services.AddTransient<IRatingRepository, RatingRepository>();
 builder.Services.AddTransient<IRatingService, RatingService>();
 
 builder.Services.AddDbContext<WebApiProjectContext>(options => options.UseSqlServer(builder.Configuration["ConnectionString"]));
+
+//Cookie auth
+var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("key").Value);
+
+builder.Services
+    .AddAuthentication(option =>
+    option.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme
+
+   )
+    .AddJwtBearer(options =>
+    {
+        options.Events = new JwtBearerEvents()
+        {
+
+            //get cookie value
+            OnMessageReceived = context =>
+            {
+                var a = "";
+                context.Request.Cookies.TryGetValue("X-Access-Token", out a);
+                context.Token = a;
+                return Task.CompletedTask;
+            }
+        };
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ClockSkew = TimeSpan.Zero,
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+        };
+    });
+
+builder.Services.AddControllers();
+
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

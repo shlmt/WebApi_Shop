@@ -44,7 +44,7 @@ namespace project.Controllers
             return NotFound();
         }
 
-        [HttpPut]
+/*        [HttpPut]
         [Route("update/{id}")]
         public async Task<ActionResult<Category>> Update(int id, [FromBody] Category newcategory)
         {
@@ -52,6 +52,6 @@ namespace project.Controllers
             Category c = await _categoriesService.updateCategory(id, newcategory);
             CategoryDTO categoryDTO = _mapper.Map<Category, CategoryDTO>(c);
             return Ok(categoryDTO);
-        }
+        }*/
     }
 }

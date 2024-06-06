@@ -65,15 +65,13 @@ const update = async () => {
 }
 
 const checkStrength = async () => {
-    const obj = {
-        Pass: document.getElementById("password2").value,
-    }
+    const Password = document.getElementById("password2").value
     const res = await fetch("api/users/passStrength", {
         method: "POST",
         headers: {
             'content-type': 'application/json'
         },
-        body: JSON.stringify(obj)
+        body: JSON.stringify(Password)
     })
     const dataPost = await res.json();
     document.getElementById("strong").innerHTML = dataPost
