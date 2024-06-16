@@ -43,7 +43,8 @@ namespace project.Controllers
                 return NoContent();
             else
                 Response.Cookies.Append("X-Access-Token", user.Token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-            return Ok(user);
+/*            User user2 = _mapper.Map<User, UserDTO>(user);
+*/            return Ok(user);
         }
 
         [HttpPost]
