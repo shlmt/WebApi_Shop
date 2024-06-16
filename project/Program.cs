@@ -83,14 +83,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseErrorHandlingMiddleware();
+
+app.UseRatingMiddleware();
+
 app.UseStaticFiles();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseRatingMiddleware();
-
-app.UseErrorHandlingMiddleware();
 
 app.Run();
