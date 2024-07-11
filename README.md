@@ -44,7 +44,7 @@ To ensure scalability, all functions are implemented using asynchronous programm
 
 ### Data Input
 
-Data input is handled in a separate project. You can find more details and access it here: [Link to ADO project on GitHub] 
+Data input is handled in a separate project. You can find more details and access it here: [[Link to ADO project on GitHub] ](https://github.com/shlmt/ADO.NET-manager-shop)
 
 ### Documentation
 
