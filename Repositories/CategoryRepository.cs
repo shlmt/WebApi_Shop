@@ -24,8 +24,9 @@ namespace Repositories
             return await _webApiProjectContext.Categories.FindAsync(id);
         }
 
-        public async Task<Category> addCategory(Category category)
+        public async Task<Category> addCategory(string categoryName)
         {
+            Category category = new Category() { CategoryName = categoryName };
             await _webApiProjectContext.Categories.AddAsync(category);
             try
             {  

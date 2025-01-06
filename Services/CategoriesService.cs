@@ -21,9 +21,9 @@ namespace Services
             return await _categoriesRepository.getCategoryById(id);
         }
 
-        public async Task<Category> createCategory(Category category)
+        public async Task<Category> createCategory(string categoryName)
         {
-            return  await _categoriesRepository.addCategory(category);
+            return  await _categoriesRepository.addCategory(categoryName);
         }
 
         public async Task<Category> updateCategory(int id, string categoryName)

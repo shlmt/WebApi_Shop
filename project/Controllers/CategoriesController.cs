@@ -45,15 +45,14 @@ namespace project.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CategoryDTO>> CreateCategory([FromBody] CategoryDTO category)
+        public async Task<ActionResult<CategoryDTO>> CreateCategory([FromBody] string categoryName)
         {
-            if (category == null)
+            if (categoryName == null || categoryName=="")
                 return BadRequest();
-            Category newCategory = _mapper.Map<CategoryDTO, Category>(category);
-            Category categoryfromDb = await _categoriesService.createCategory(newCategory);
-            CategoryDTO newAddedCategory = _mapper.Map<Category, CategoryDTO>(categoryfromDb);
-            if (newAddedCategory != null)
-                return Ok(newAddedCategory);
+            Category category = await _categoriesService.createCategory(categoryName);
+            CategoryDTO newCategory = _mapper.Map<Category, CategoryDTO>(category);
+            if (newCategory != null)
+                return Ok(newCategory);
             return StatusCode(500);
         }
 
