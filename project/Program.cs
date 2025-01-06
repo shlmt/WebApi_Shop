@@ -26,7 +26,7 @@ builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IRatingRepository, RatingRepository>();
 builder.Services.AddTransient<IRatingService, RatingService>();
 
-builder.Services.AddDbContext<WebApiProjectContext>(options => options.UseSqlServer(builder.Configuration["ConnectionString"]));
+builder.Services.AddDbContext<WebApiProjectContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("localDB")));
 
 //Cookie auth
 var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("key").Value);
