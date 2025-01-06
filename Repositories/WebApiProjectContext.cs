@@ -29,7 +29,7 @@ public partial class WebApiProjectContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if(!optionsBuilder.IsConfigured)
-            optionsBuilder.UseSqlServer("Data Source=srv2\\PUPILS;Initial Catalog=webApiProject;Trusted_Connection=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("server=localhost;user=root;password=1234;database=shop");
     }
     
 
