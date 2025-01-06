@@ -22,7 +22,7 @@ namespace DTOs
         public string Password { get; set; } = null!;
 
         [NotMapped]
-        public string Token { get; set; }
+        public string? Token { get; set; }
 
     }
 }
