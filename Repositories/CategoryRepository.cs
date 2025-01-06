@@ -1,7 +1,5 @@
 ﻿using Entities;
 using Microsoft.EntityFrameworkCore;
-
-//using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
 namespace Repositories
@@ -14,17 +12,17 @@ namespace Repositories
             this._webApiProjectContext = webApiProjectContext;
         }
 
-        public async Task<List<Category>> getCategories()
+        public async Task<List<Category>> GetCategories()
         {
             return await _webApiProjectContext.Categories.ToListAsync();
         }
 
-        public async Task<Category> getCategoryById(int id)
+        public async Task<Category> GetCategoryById(int id)
         {
             return await _webApiProjectContext.Categories.FindAsync(id);
         }
 
-        public async Task<Category> addCategory(string categoryName)
+        public async Task<Category> AddCategory(string categoryName)
         {
             Category category = new Category() { CategoryName = categoryName };
             await _webApiProjectContext.Categories.AddAsync(category);
@@ -36,10 +34,10 @@ namespace Repositories
             {
                 return null;
             }
-            return await getCategoryById(category.CategoryId);
+            return await GetCategoryById(category.CategoryId);
         }
 
-        public async Task<Category> updateCategory(int id, string categoryName)
+        public async Task<Category> UpdateCategory(int id, string categoryName)
         {
             var category = await _webApiProjectContext.Categories.FindAsync(id);
             if (category == null)
@@ -56,9 +54,9 @@ namespace Repositories
             return category;
         }
 
-        public async Task<bool> deleteCategory(int id)
+        public async Task<bool> DeleteCategory(int id)
         {
-            var category = await getCategoryById(id);
+            var category = await GetCategoryById(id);
             if (category == null)
             {
                 return false;

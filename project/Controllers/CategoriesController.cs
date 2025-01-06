@@ -23,7 +23,7 @@ namespace project.Controllers
         [HttpGet]
         public async Task<ActionResult<List<CategoryDTO>>> GetAll()
         {
-            List<Category> category = await _categoriesService.getCategories();
+            List<Category> category = await _categoriesService.GetCategories();
             if (category != null)
             {
                 List<CategoryDTO> categoryDTOs = _mapper.Map<List<Category>, List<CategoryDTO>>(category);
@@ -35,7 +35,7 @@ namespace project.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CategoryDTO>> GetById(int id)
         {
-            Category category = await _categoriesService.getCategoryById(id);
+            Category category = await _categoriesService.GetCategoryById(id);
             if (category != null)
             {
                 CategoryDTO categoryDTO = _mapper.Map<Category, CategoryDTO>(category);
@@ -49,7 +49,7 @@ namespace project.Controllers
         {
             if (categoryName == null || categoryName=="")
                 return BadRequest();
-            Category category = await _categoriesService.createCategory(categoryName);
+            Category category = await _categoriesService.CreateCategory(categoryName);
             CategoryDTO newCategory = _mapper.Map<Category, CategoryDTO>(category);
             if (newCategory != null)
                 return Ok(newCategory);
@@ -62,7 +62,7 @@ namespace project.Controllers
         {
             if(categoryName == null || categoryName=="")
                 return BadRequest();
-            Category category = await _categoriesService.updateCategory(id, categoryName);
+            Category category = await _categoriesService.UpdateCategory(id, categoryName);
             if (category == null)
                 return NotFound();
             CategoryDTO categoryDTO = _mapper.Map<Category, CategoryDTO>(category);
@@ -75,10 +75,10 @@ namespace project.Controllers
         [Route("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            Category category = await _categoriesService.getCategoryById(id);
+            Category category = await _categoriesService.GetCategoryById(id);
             if(category == null)
                 return NotFound();
-            bool isDeleted = await _categoriesService.deleteCategory(id);
+            bool isDeleted = await _categoriesService.DeleteCategory(id);
             if (isDeleted)
                 return NoContent();
             return BadRequest();

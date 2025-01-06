@@ -11,29 +11,29 @@ namespace Services
         {
             this._categoriesRepository = catgoriesRepository;
         }
-        public async Task<List<Category>> getCategories()
+        public async Task<List<Category>> GetCategories()
         {
-            return await _categoriesRepository.getCategories();
+            return await _categoriesRepository.GetCategories();
         }
 
-        public async Task<Category> getCategoryById(int id)
+        public async Task<Category> GetCategoryById(int id)
         {
-            return await _categoriesRepository.getCategoryById(id);
+            return await _categoriesRepository.GetCategoryById(id);
         }
 
-        public async Task<Category> createCategory(string categoryName)
+        public async Task<Category> CreateCategory(string categoryName)
         {
-            return  await _categoriesRepository.addCategory(categoryName);
+            return  await _categoriesRepository.AddCategory(categoryName);
         }
 
-        public async Task<Category> updateCategory(int id, string categoryName)
+        public async Task<Category> UpdateCategory(int id, string categoryName)
         {
-            return await _categoriesRepository.updateCategory(id, categoryName); ;
+            return await _categoriesRepository.UpdateCategory(id, categoryName); ;
         }
 
-        public async Task<bool> deleteCategory(int id)
+        public async Task<bool> DeleteCategory(int id)
         {
-            return await _categoriesRepository.deleteCategory(id); ;
+            return await _categoriesRepository.DeleteCategory(id); ;
         }
     }
 }

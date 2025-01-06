@@ -1,15 +1,14 @@
 ﻿using Entities;
-//using project;
 
 namespace Repositories
 {
     public interface ICategoriesRepository
     {
-        public Task<List<Category>> getCategories();
-        public Task<Category> getCategoryById(int id);
-        public Task<Category> addCategory(string categoryName);
-        public Task<Category> updateCategory(int id, string categoryName);
-        public Task<bool> deleteCategory(int id);
+        Task<List<Category>> GetCategories();
+        Task<Category> GetCategoryById(int id);
+        Task<Category> AddCategory(string categoryName);
+        Task<Category> UpdateCategory(int id, string categoryName);
+        Task<bool> DeleteCategory(int id);
 
     }
 }
