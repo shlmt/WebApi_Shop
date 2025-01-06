@@ -7,8 +7,9 @@ namespace Repositories
     {
         public Task<List<Category>> getCategories();
         public Task<Category> getCategoryById(int id);
-        public  Task<Category> addCategory(Category category);
-        public  Task<Category> updateCategory(int id, Category updatedCategoryDetails);
- 
+        public Task<Category> addCategory(Category category);
+        public Task<Category> updateCategory(int id, string categoryName);
+        public Task<bool> deleteCategory(int id);
+
     }
 }

@@ -14,6 +14,11 @@ namespace Repositories
             this._webApiProjectContext = webApiProjectContext;
         }
 
+        public async Task<List<Category>> getCategories()
+        {
+            return await _webApiProjectContext.Categories.ToListAsync();
+        }
+
         public async Task<Category> getCategoryById(int id)
         {
             return await _webApiProjectContext.Categories.FindAsync(id);
@@ -22,26 +27,52 @@ namespace Repositories
         public async Task<Category> addCategory(Category category)
         {
             await _webApiProjectContext.Categories.AddAsync(category);
-            await _webApiProjectContext.SaveChangesAsync();
+            try
+            {  
+                await _webApiProjectContext.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
             return await getCategoryById(category.CategoryId);
         }
 
+        public async Task<Category> updateCategory(int id, string categoryName)
+        {
+            var category = await _webApiProjectContext.Categories.FindAsync(id);
+            if (category == null)
+                return null; 
+            category.CategoryName = categoryName;
+            try
+            {
+                await _webApiProjectContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return category;
+        }
 
-        public async Task<Category> updateCategory(int id, Category updatedCategory)
+        public async Task<bool> deleteCategory(int id)
         {
             var category = await getCategoryById(id);
             if (category == null)
             {
-                return null;
+                return false;
             }
-            _webApiProjectContext.Entry(category).CurrentValues.SetValues(updatedCategory);
-            await _webApiProjectContext.SaveChangesAsync();
-            return updatedCategory;
+            _webApiProjectContext.Categories.Remove(category);
+            try
+            {
+                await _webApiProjectContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
         }
 
-        public async Task<List<Category>> getCategories()
-        {
-            return await _webApiProjectContext.Categories.ToListAsync();
-        }
     }
 }

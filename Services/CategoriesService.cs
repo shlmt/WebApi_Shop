@@ -11,6 +11,11 @@ namespace Services
         {
             this._categoriesRepository = catgoriesRepository;
         }
+        public async Task<List<Category>> getCategories()
+        {
+            return await _categoriesRepository.getCategories();
+        }
+
         public async Task<Category> getCategoryById(int id)
         {
             return await _categoriesRepository.getCategoryById(id);
@@ -21,14 +26,14 @@ namespace Services
             return  await _categoriesRepository.addCategory(category);
         }
 
-        public async Task<Category> updateCategory(int id, Category category)
+        public async Task<Category> updateCategory(int id, string categoryName)
         {
-            return await _categoriesRepository.updateCategory(id,category); ;
+            return await _categoriesRepository.updateCategory(id, categoryName); ;
         }
 
-        public async Task<List<Category>> getCategories()
+        public async Task<bool> deleteCategory(int id)
         {
-            return await _categoriesRepository.getCategories();
+            return await _categoriesRepository.deleteCategory(id); ;
         }
     }
 }

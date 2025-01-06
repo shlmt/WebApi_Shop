@@ -21,19 +21,19 @@ namespace project.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Category>> GetAll()
+        public async Task<ActionResult<List<CategoryDTO>>> GetAll()
         {
             List<Category> category = await _categoriesService.getCategories();
             if (category != null)
             {
-                List<CategoryDTO> categoryDTO = _mapper.Map<List<Category>, List<CategoryDTO>>(category);
-                return Ok(categoryDTO);
+                List<CategoryDTO> categoryDTOs = _mapper.Map<List<Category>, List<CategoryDTO>>(category);
+                return Ok(categoryDTOs);
             }
             return NotFound();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetById(int id)
+        public async Task<ActionResult<CategoryDTO>> GetById(int id)
         {
             Category category = await _categoriesService.getCategoryById(id);
             if (category != null)
@@ -44,14 +44,46 @@ namespace project.Controllers
             return NotFound();
         }
 
-/*        [HttpPut]
-        [Route("update/{id}")]
-        public async Task<ActionResult<Category>> Update(int id, [FromBody] Category newcategory)
+        [HttpPost]
+        public async Task<ActionResult<CategoryDTO>> CreateCategory([FromBody] CategoryDTO category)
         {
+            if (category == null)
+                return BadRequest();
+            Category newCategory = _mapper.Map<CategoryDTO, Category>(category);
+            Category categoryfromDb = await _categoriesService.createCategory(newCategory);
+            CategoryDTO newAddedCategory = _mapper.Map<Category, CategoryDTO>(categoryfromDb);
+            if (newAddedCategory != null)
+                return Ok(newAddedCategory);
+            return StatusCode(500);
+        }
 
-            Category c = await _categoriesService.updateCategory(id, newcategory);
-            CategoryDTO categoryDTO = _mapper.Map<Category, CategoryDTO>(c);
-            return Ok(categoryDTO);
-        }*/
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<ActionResult<CategoryDTO>> Update(int id, [FromBody] string categoryName)
+        {
+            if(categoryName == null || categoryName=="")
+                return BadRequest();
+            Category category = await _categoriesService.updateCategory(id, categoryName);
+            if (category == null)
+                return NotFound();
+            CategoryDTO categoryDTO = _mapper.Map<Category, CategoryDTO>(category);
+            if (categoryDTO != null)
+                return Ok(categoryDTO);
+            return BadRequest();
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            Category category = await _categoriesService.getCategoryById(id);
+            if(category == null)
+                return NotFound();
+            bool isDeleted = await _categoriesService.deleteCategory(id);
+            if (isDeleted)
+                return NoContent();
+            return BadRequest();
+        }
+
     }
 }
