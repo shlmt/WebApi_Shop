@@ -2,24 +2,66 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>כניסה והרשמה | משולשים</title>
+    <link href="Style/Store.css" rel="stylesheet" />
     <script src="Scripts/index.js"></script>
 </head>
-<body style="padding:10px">
-    <div>
-        <h2>LOGIN</h2>
-        <input placeholder='email' id='email' type="email"/><br/><br />
-        <input placeholder='password' id='password' type='password' /><br/><br />
-        <button onClick="login()">login</button>
-    </div>
-    <br />
-    <div>
-        <h2>REGISTER</h2>
-        <input placeholder='email' id='email2' type="email" /><br /><br />
-        <input placeholder='password' id='password2' type='password' oninput="checkStrength()" /><div id="strong"></div><br />
-        <input placeholder='firstName' id='firstName' /><br /><br />
-        <input placeholder='lastName' id='lastName' /><br /><br />
-        <button onClick='register()'>REGISTER</button>
-    </div>
+<body>
+    <header class="store-header">
+        <a class="store-brand" href="Products.html">משולשים</a>
+        <nav class="store-nav" aria-label="ניווט ראשי">
+            <a href="Products.html">המוצרים שלנו</a>
+            <a href="ShoppingBag.html">סל הקניות</a>
+        </nav>
+        <span id="userName" class="store-user-name" hidden></span>
+    </header>
+    <main class="account-shell">
+        <div class="account-intro">
+            <p class="account-eyebrow">החשבון שלך</p>
+            <h1>טוב לראות אותך כאן</h1>
+            <p>היכנסו לחשבון או צרו חשבון חדש כדי להמשיך בהזמנה.</p>
+        </div>
+        <div class="account-layout">
+            <section class="account-panel">
+                <h2>כניסה לחשבון</h2>
+                <form onsubmit="login(); return false;">
+                    <div class="field">
+                        <label for="email">כתובת אימייל</label>
+                        <input id="email" name="email" type="email" autocomplete="email" required />
+                    </div>
+                    <div class="field">
+                        <label for="password">סיסמה</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required />
+                    </div>
+                    <button class="primary-button" type="submit">כניסה</button>
+                </form>
+            </section>
+            <section class="account-panel">
+                <h2>חשבון חדש</h2>
+                <form onsubmit="register(); return false;">
+                    <div class="field">
+                        <label for="email2">כתובת אימייל</label>
+                        <input id="email2" name="email" type="email" autocomplete="email" required />
+                    </div>
+                    <div class="field">
+                        <label for="password2">סיסמה</label>
+                        <input id="password2" name="password" type="password" autocomplete="new-password" oninput="checkStrength()" required />
+                        <div id="strong" class="password-strength" aria-live="polite"></div>
+                    </div>
+                    <div class="field">
+                        <label for="firstName">שם פרטי</label>
+                        <input id="firstName" name="firstName" autocomplete="given-name" required />
+                    </div>
+                    <div class="field">
+                        <label for="lastName">שם משפחה</label>
+                        <input id="lastName" name="lastName" autocomplete="family-name" required />
+                    </div>
+                    <button class="primary-button" type="submit">יצירת חשבון</button>
+                </form>
+            </section>
+        </div>
+    </main>
+    <script src="Scripts/store.js"></script>
 </body>
 </html>

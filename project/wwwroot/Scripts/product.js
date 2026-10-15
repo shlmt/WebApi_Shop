@@ -1,5 +1,5 @@
 ﻿
-document.getElementById('ItemsCountText').textContent =sessionStorage.getItem('cart')? JSON.parse(sessionStorage.getItem("cart")).length : 0;
+document.getElementById('ItemsCountText').textContent = sessionStorage.getItem('cart') ? JSON.parse(sessionStorage.getItem("cart")).length : 0;
 
 
 getAllProduct = async () => {
@@ -22,21 +22,23 @@ removeAllCart = () => {
 
 const drawProducts=(products) =>{
     const template = document.getElementById('temp-card');
+    const productList = document.getElementById('productList');
+    document.getElementById('productCount').textContent = products.length;
 
     products.forEach(product => {
         const clone = document.importNode(template.content, true);
 
         const img = clone.querySelector('img');
         img.src = 'Images/'+product.imageUrl;
+        img.alt = product.productName;
 
         clone.querySelector('h1').textContent = product.productName
-        clone.querySelector('.price').textContent = 'Price: ' + product.price;
+        clone.querySelector('.price').textContent = product.price + ' ₪';
         clone.querySelector('.description').textContent = product.categoryName;
 
-        // You can add event listener to the button here if needed
         clone.querySelector('button').addEventListener('click', () => addToCart(product));
 
-        document.body.appendChild(clone);
+        productList.appendChild(clone);
     });
 }
 
@@ -55,7 +57,7 @@ const drawCategories = (categories) => {
 
         checkbox.id = category.categoryId;
         checkbox.value = category.categoryId;
-        clone.querySelector('label').htmlFor = category.id;
+        clone.querySelector('label').htmlFor = category.categoryId;
         clone.querySelector('.OptionName').textContent = category.categoryName;
         clone.querySelector('.Count').textContent = category.count;
 
@@ -64,8 +66,7 @@ const drawCategories = (categories) => {
 }
 
 const clear = () => {
-    const elementsToRemove = document.querySelectorAll('.card');
-    elementsToRemove.forEach(element => element.remove());
+    document.getElementById('productList').replaceChildren();
 }
 
 const  filterProducts =async () => {

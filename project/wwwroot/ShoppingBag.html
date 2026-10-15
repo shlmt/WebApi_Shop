@@ -2,30 +2,46 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>סל הקניות | משולשים</title>
+    <link href="Style/Store.css" rel="stylesheet" />
     <link href="Style/ShoppingBag.css" rel="stylesheet" />
     <template id="temp-row">
         <tr class="item-row">
-            <td class="imageColumn"><a rel="lightbox" href="#"><img src="" width="200px"/></a></td>
+            <td class="imageColumn"><a rel="lightbox" href="#"><img src="" alt="" /></a></td>
             <td class="descriptionColumn"><div><h3 class="itemName"></h3><h6><p class="itemNumber"></p></h6></div></td>
             <td class="quantity"><div></div></td>
-            <td class="totalColumn delete"><div class="expandoHeight" style="height: 99px;"><p class="price"></p><button id="remove">הסרת פריט</button></div></td>
+            <td class="totalColumn delete"><div class="expandoHeight"><p class="price"></p><button type="button" id="remove">הסרת פריט</button></div></td>
         </tr>
     </template>
 </head>
 <body>
+    <header class="store-header">
+        <a class="store-brand" href="Products.html">משולשים</a>
+        <nav class="store-nav" aria-label="ניווט ראשי">
+            <a href="Products.html">המוצרים שלנו</a>
+            <a href="login.html">החשבון שלי</a>
+        </nav>
+        <span id="userName" class="store-user-name" hidden></span>
+    </header>
     <div class="cart">
         <div id="title">
-            <h1> סל קניות </h1>
-            <br />
-            <p>
-                הסל שלך מכיל <span id="itemCount"></span> פריטים ומגיע לסך של <span id="totalAmount"></span>.            <br />
-            </p>
-
-            <a class="nxbtn primary GoToCheckout TopLink checkout_transfer" href="#" onclick="placeOrder(); return false;">לביצוע ההזמנה</a> <a class="shopmore" href="Products.html?fromShoppingBag=1">המשך בקניה</a> <div class="ClearBoth"></div>
+            <div>
+                <p class="cart-eyebrow">ההזמנה שלך</p>
+                <h1>סל הקניות</h1>
+                <p class="cart-summary">בסל <strong id="itemCount"></strong> פריטים · סך הכול <strong><span id="totalAmount"></span> ₪</strong></p>
+            </div>
+            <div class="cart-actions">
+                <a class="shopmore" href="Products.html?fromShoppingBag=1">המשך בקנייה</a>
+                <a class="nxbtn primary GoToCheckout TopLink checkout_transfer" href="#" onclick="placeOrder(); return false;">לביצוע ההזמנה</a>
+            </div>
         </div>
-        <br />
-        <div class="cistGroup">
+        <div id="empty-cart" class="empty-cart" hidden>
+            <h2>הסל שלך עדיין ריק</h2>
+            <p>בחרו את הדברים הטעימים שלכם ונשמור אותם כאן.</p>
+            <a class="nxbtn primary" href="Products.html">לצפייה במוצרים</a>
+        </div>
+        <div class="cart-table-wrap">
             <table id="items" class="items">
                 <thead>
                     <tr>
@@ -40,5 +56,6 @@
         </div>
     </div>
 </body>
+<script src="Scripts/store.js"></script>
 <script src="../Scripts/cart.js"></script>
 </html>

@@ -13,7 +13,9 @@
     const dataPost = await res.json();
     if (res.ok) {
         sessionStorage.setItem("user", JSON.stringify(dataPost));
-        window.location.href = 'products.html'
+        const returnUrl = sessionStorage.getItem("returnUrl");
+        sessionStorage.removeItem("returnUrl");
+        window.location.href = returnUrl || 'products.html';
     }
     else alert('not authorized')
 }
@@ -36,7 +38,9 @@ const register = async () => {
     if (res.ok) {
         alert('created!')
         sessionStorage.setItem("user", JSON.stringify(dataPost));
-        window.location.href = 'update.html'
+        const returnUrl = sessionStorage.getItem("returnUrl");
+        sessionStorage.removeItem("returnUrl");
+        window.location.href = returnUrl || 'update.html'
     }
     else {
         alert("error")
@@ -80,4 +84,9 @@ const checkStrength = async () => {
     })
     const dataPost = await res.json();
     document.getElementById("strong").innerHTML = dataPost
+}
+
+function logout() {
+    sessionStorage.removeItem("user");
+    window.location.href = "Products.html";
 }

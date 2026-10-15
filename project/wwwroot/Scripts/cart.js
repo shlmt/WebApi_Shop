@@ -3,6 +3,13 @@ const getSumPrice = () => {
     prodCart.forEach(p => sum += p.price)
     return sum
 }
+const updateCartSummary = () => {
+    document.getElementById('totalAmount').textContent = getSumPrice();
+    document.getElementById('itemCount').textContent = prodCart.length;
+    document.getElementById('empty-cart').hidden = prodCart.length > 0;
+    document.getElementById('items').hidden = prodCart.length === 0;
+}
+
 const deleteRow=(product)=> {
     const rows = document.querySelectorAll('.item-row');
     rows.forEach(row => {
@@ -11,21 +18,20 @@ const deleteRow=(product)=> {
             return;
         }
     });
-    document.getElementById('totalAmount').innerHTML = getSumPrice();
-    document.getElementById('itemCount').innerHTML = prodCart.length;
+    updateCartSummary();
 }
 
 
 const removeProduct = (product) => {
     let cart = sessionStorage.getItem('cart') ? JSON.parse(sessionStorage.getItem("cart")) : [];
     let newCart = cart.filter(p => product.productName != p.productName)
+    prodCart = newCart;
     sessionStorage.setItem("cart", JSON.stringify(newCart));
     deleteRow(product)
 }
 
 const createProductRows = (products) => {
-    document.getElementById('totalAmount').innerHTML = getSumPrice();
-    document.getElementById('itemCount').innerHTML = prodCart.length;
+    updateCartSummary();
 
     const template = document.getElementById('temp-row');
 
@@ -61,15 +67,16 @@ const clear = () => {
     const elementsToRemove = document.querySelectorAll('.item-row');
     elementsToRemove.forEach(element => element.remove());
     sessionStorage.removeItem("cart")
-    document.getElementById('totalAmount').innerHTML = 0;
-    document.getElementById('itemCount').innerHTML = 0;
+    prodCart = [];
+    updateCartSummary();
 }
 
 const placeOrder = async () => {
     const user = sessionStorage.getItem("user")
     if(!user){
-        alert("you need to sign in")
-            return
+        sessionStorage.setItem("returnUrl", "ShoppingBag.html");
+        window.location.href = "login.html";
+        return;
     }
     const uniqueProducts = [];
     const productCounts = {};
@@ -111,5 +118,5 @@ const placeOrder = async () => {
     else alert('error')
 }
 
-const prodCart = sessionStorage.getItem('cart') ? JSON.parse(sessionStorage.getItem("cart")) : [];
+let prodCart = sessionStorage.getItem('cart') ? JSON.parse(sessionStorage.getItem("cart")) : [];
 createProductRows(prodCart)

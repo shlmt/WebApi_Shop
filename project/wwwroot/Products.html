@@ -1,19 +1,19 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <link href="./Style/Products.css" rel="stylesheet" />
-
     <meta charset="utf-8" />
-    <title>הטעימים שלנו</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>המוצרים שלנו | משולשים</title>
+    <link href="./Style/Products.css" rel="stylesheet" />
     <template id="temp-card">
         <div class="card">
             <div class="img-w">
-                <img src="tmp.jpg" alt="" style="width:100%">
+                <img src="tmp.jpg" alt="">
             </div>
             <h1></h1>
             <p class="price"></p>
             <p class="description"></p>
-            <p><button>הוסף לסל</button></p>
+            <button class="add-to-cart" type="button">הוספה לסל</button>
         </div>
     </template>
     <template id="temp-category">
@@ -22,7 +22,6 @@
             <label for="">
                 <span class="OptionName"></span>
                 <span class="Count"></span>
-                </a>
             </label>
         </div>
     </template>
@@ -30,77 +29,54 @@
 <body>
     <header>
         <div class="bar">
-
-
-            <section class="QuickLinks">
-                <ul>
-                    <li class="" data-section="myAccount">
-                        <a href="../update.html" title="כניסה לצפייה בפרטי החשבון" onclick="TrackLinkID(this);" accesskey="h">החשבון שלי</a>
-                    </li>
-                    <li>
-                        <a href="#" title="קניה מהירה">קניה מהירה</a>
-                    </li>
-                    <li>
-                        <a href="#" title="עזרה - שאלות נפוצות, כיצד לקנות באינטרנט, מדריך ועוד" target="_blank">עזרה</a>
-                    </li>
-                </ul>
-            </section>
-
-            <span class="BagSummary MiniBagNonSecure">
-                <a href="shoppingbag.html">
-                    <div class="Icon">
-                        <div class="ItemCount">
-                            <span id="ItemsCountText">0</span>
-                        </div>
-                    </div>
-
+            <a class="brand" href="Products.html">משולשים</a>
+            <nav class="QuickLinks" aria-label="ניווט ראשי">
+                <a href="Products.html" aria-current="page">המוצרים שלנו</a>
+                <a id="accountLink" href="login.html">החשבון שלי</a>
+            </nav>
+            <div class="header-actions">
+                <span id="userName" class="user-name" hidden></span>
+                <a class="cart-link" href="ShoppingBag.html" aria-label="מעבר לסל הקניות">
+                    סל הקניות <span id="ItemsCountText" class="cart-count">0</span>
                 </a>
-            </span>
-            <div class="Checkout ">
-                <a class="goToCart" href="ShoppingBag.html">לקופה</a>
             </div>
-
-
         </div>
     </header>
-
-    <div id="filters" class="Filters fixedVisible">
-        <div class="ResultCount" style="position: absolute; top: 0px;">
-            <button class="Clear" onclick="removeAllCart()">ריקון הסל</button>
-            <div>
-                <span id="counter">
-                </span>
+    <main class="shop-layout">
+        <aside id="filters" class="Filters">
+            <div class="filter-heading">
+                <h2>סינון מוצרים</h2>
+                <button class="Clear" type="button" onclick="removeAllCart()">ריקון הסל</button>
             </div>
-        </div>
-        <div id="categoryList" class="filterBreak">
-            <span>בחירת קטגוריה</span>
-        </div>
-
-        <div id="nameFilter" class="nameFilter filterBreak">
-            <input type="text" id="nameSearch" class="floatRight" placeholder="חיפוש לפי שם מוצר">
-        </div>
-        <div id="priceRangeFilter" class="filterBreak">
-            <div><span id="counter">  </span> מחיר:</div>
-            <input type="text" maxlength="9" id="minPrice" class="priceInputText">
-            <span class="priceCurrency">₪</span>
-            <br/>
-            <input type="text" maxlength="9" id="maxPrice" class="priceInputText">
-            <span class="priceCurrency">₪</span>
-        </div>
-        <button onclick="filterProducts()">
-            <span><img src="Images/searchIcon.svg" alt="סמל חיפוש"></span>
-        </button>
-    </div>
-
-    <div id="PoductList">
-
-    </div>
-    <div class="pagination">
-        <a href="#">&laquo;</a>
-        <div id="pages"></div>
-        <a href="#">&raquo;</a>
-    </div>
+            <div class="filter-group nameFilter">
+                <label for="nameSearch">חיפוש לפי שם מוצר</label>
+                <input type="search" id="nameSearch" placeholder="מה מתחשק לכם?">
+            </div>
+            <div id="categoryList" class="filter-group category-list">
+                <h3>קטגוריה</h3>
+            </div>
+            <div id="priceRangeFilter" class="filter-group price-filter">
+                <h3>טווח מחיר</h3>
+                <label for="minPrice">מינימום</label>
+                <div class="price-input-wrap"><input type="number" min="0" id="minPrice" class="priceInputText" placeholder="0"><span>₪</span></div>
+                <label for="maxPrice">מקסימום</label>
+                <div class="price-input-wrap"><input type="number" min="0" id="maxPrice" class="priceInputText" placeholder="ללא הגבלה"><span>₪</span></div>
+            </div>
+            <button class="filter-submit" type="button" onclick="filterProducts()">הצגת תוצאות</button>
+        </aside>
+        <section class="products-area" aria-labelledby="products-title">
+            <div class="products-heading">
+                <div>
+                    <p class="eyebrow">מהתנור אליכם</p>
+                    <h1 id="products-title">הטעימים שלנו</h1>
+                </div>
+                <p class="product-count"><span id="productCount">0</span> מוצרים</p>
+            </div>
+            <div id="productList" class="product-grid"></div>
+        </section>
+    </main>
 </body>
+<script src="./Scripts/store.js"></script>
 <script src="./Scripts/Product.js"></script>
 
 </html>
