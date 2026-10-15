@@ -27,11 +27,8 @@ public partial class WebApiProjectContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if(!optionsBuilder.IsConfigured)
-            optionsBuilder.UseSqlServer("Data Source=localhost\\SQLEXPRESS;Initial Catalog=shop;Trusted_Connection=True;TrustServerCertificate=True");
-    }
-    
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=localhost\\SQLEXPRESS;Initial Catalog=shop;Integrated Security=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -41,7 +38,7 @@ public partial class WebApiProjectContext : DbContext
 
             entity.Property(e => e.CategoryId).HasColumnName("categoryId");
             entity.Property(e => e.CategoryName)
-                .HasMaxLength(30)
+                .HasMaxLength(15)
                 .IsFixedLength()
                 .HasColumnName("categoryName");
         });
@@ -84,7 +81,7 @@ public partial class WebApiProjectContext : DbContext
             entity.Property(e => e.ProductId).HasColumnName("productId");
             entity.Property(e => e.CategoryId).HasColumnName("categoryId");
             entity.Property(e => e.Description)
-                .HasMaxLength(50)
+                .HasMaxLength(250)
                 .IsFixedLength()
                 .HasColumnName("description");
             entity.Property(e => e.ImageUrl)
@@ -92,10 +89,7 @@ public partial class WebApiProjectContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("imageUrl");
             entity.Property(e => e.Price).HasColumnName("price");
-            entity.Property(e => e.ProductName)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("productName");
+            entity.Property(e => e.ProductName).HasColumnName("productName");
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)
