@@ -35,18 +35,18 @@ namespace Services
             user.Token = generateJwtToken(user);
             return user;
         }
-        public async Task<User> createUser(User user)
+        public async Task<User?> createUser(User user)
         {
             if (CheckPasswordStregth(user.Password) <= 2)
                 return null;
-            return  await _usersRepository.addUser(user);
+            return await _usersRepository.addUser(user);
         }
 
-        public async Task<User> updateUser(int id, User user)
+        public async Task<User?> updateUser(int id, User user)
         {
             if (CheckPasswordStregth(user.Password) <= 2)
                 return null;
-            return await _usersRepository.update(id,user); ;
+            return await _usersRepository.update(id, user);
         }
 
         public int CheckPasswordStregth(string pass)
